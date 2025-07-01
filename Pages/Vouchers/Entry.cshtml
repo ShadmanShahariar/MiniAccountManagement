@@ -1,0 +1,87 @@
+﻿@page
+@model EntryModel
+@{
+    ViewData["Title"] = "Voucher Entry";
+}
+
+<h2>Voucher Entry</h2>
+
+<form method="post">
+    <div>
+        <label>Date:</label>
+        <input type="date" asp-for="Voucher.VoucherDate" required />
+    </div>
+
+    <div>
+        <label>Reference No:</label>
+        <input asp-for="Voucher.ReferenceNo" required />
+    </div>
+
+    <div>
+        <label>Type:</label>
+        <select asp-for="Voucher.VoucherType" required>
+            <option value="">--Select--</option>
+            <option>Journal</option>
+            <option>Payment</option>
+            <option>Receipt</option>
+        </select>
+    </div>
+
+    <hr />
+    <h4>Entries</h4>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Account</th>
+                <th>Debit</th>
+                <th>Credit</th>
+            </tr>
+        </thead>
+        <tbody id="entries">
+            <tr>
+                <td>
+                    <select name="Voucher.Entries[0].AccountId" required>
+                        <option value="">--Select--</option>
+                        @foreach (var acc in Model.Accounts)
+                        {
+                            <option value="@acc.Id">@acc.AccountName</option>
+                        }
+                    </select>
+                </td>
+                <td><input type="number" class="debit-amount" name="Voucher.Entries[0].Debit" step="0.01" /></td>
+                <td><input type="number" class=".credit-amount" name="Voucher.Entries[0].Credit" step="0.01" /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="submit">Save Voucher</button>
+</form>
+<script>
+    function validateVoucherTotals() {
+        let debitTotal = 0;
+        let creditTotal = 0;
+
+        document.querySelectorAll(".debit-amount").forEach(input => {
+            debitTotal += parseFloat(input.value) || 0;
+        });
+
+        document.querySelectorAll(".credit-amount").forEach(input => {
+            creditTotal += parseFloat(input.value) || 0;
+        });
+
+        if (debitTotal !== creditTotal) {
+            alert("Debit and Credit totals must be equal.");
+            return false;
+        }
+
+        return true;
+    }
+
+    document.getElementById("voucherForm").addEventListener("submit", function (e) {
+        if (!validateVoucherTotals()) {
+            e.preventDefault(); // Stop form submission
+        }
+    });
+</script>
+
