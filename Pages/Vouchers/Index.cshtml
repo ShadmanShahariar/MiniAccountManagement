@@ -1,0 +1,33 @@
+﻿@page
+@using MiniAccountManagement.ViewModels;
+
+@model IndexModel
+@{
+    ViewData["Title"] = "Voucher List";
+}
+
+<h2>Voucher List</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Reference No</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Created By</th>
+            <th>Created On</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var voucher in Model.Vouchers)
+        {
+            <tr>
+                <td>@voucher.ReferenceNo</td>
+                <td>@voucher.VoucherType</td>
+                <td>@voucher.VoucherDate.ToString("yyyy-MM-dd")</td>
+                <td>@voucher.CreatedBy</td>
+                <td>@voucher.CreatedOn.ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>
