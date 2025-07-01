@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using MiniAccountManagement.ViewModels;
 using System.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MiniAccountManagement.Pages.Vouchers
 {
@@ -39,5 +40,30 @@ namespace MiniAccountManagement.Pages.Vouchers
                 });
             }
         }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            using (var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            {
+                await conn.OpenAsync();
+
+                // Delete details first (FK constraint)
+                using (var cmd = new SqlCommand("DELETE FROM VoucherDetails WHERE VoucherId = @Id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                // Delete master
+                using (var cmd = new SqlCommand("DELETE FROM VoucherMaster WHERE Id = @Id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+            }
+
+            return RedirectToPage();
+        }
+
     }
 }

@@ -16,6 +16,8 @@
             <th>Date</th>
             <th>Created By</th>
             <th>Created On</th>
+            <th>Details</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -27,6 +29,15 @@
                 <td>@voucher.VoucherDate.ToString("yyyy-MM-dd")</td>
                 <td>@voucher.CreatedBy</td>
                 <td>@voucher.CreatedOn.ToString("g")</td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@voucher.Id" class="btn btn-sm btn-info">Details</a>
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@voucher.Id" onsubmit="return confirm('Are you sure you want to delete this voucher?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                </td>
+
             </tr>
         }
     </tbody>
