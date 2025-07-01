@@ -1,0 +1,47 @@
+﻿@model List<MiniAccountManagement.ViewModels.ChartOfAccountViewModel>
+
+<ul>
+    @foreach (var account in Model)
+    {
+        var hasChildren = account.Children != null && account.Children.Any();
+        var childId = $"child-{account.Id}";
+        <li>
+            @if (hasChildren)
+            {
+                <span class="toggle-btn" onclick="toggleChildren('@childId', this)">▶</span>
+            }
+            else
+            {
+                <span style="display:inline-block; width: 16px;"></span>
+            }
+
+            <strong>@account.AccountName</strong> (@account.AccountType)
+            @if (!account.Children.Any())
+            {
+                <form method="post" asp-page-handler="Delete" asp-route-id="@account.Id" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                    <button type="submit">Delete</button>
+                </form>
+            }
+
+            @if (hasChildren)
+            {
+                <ul id="@childId" style="display:none; margin-left:20px;">
+                    @await Html.PartialAsync("_ListPartial", account.Children)
+                </ul>
+            }
+        </li>
+    }
+</ul>
+
+<script>
+    function toggleChildren(id, btn) {
+        const target = document.getElementById(id);
+        if (target.style.display === "none") {
+            target.style.display = "block";
+            btn.textContent = "▼";
+        } else {
+            target.style.display = "none";
+            btn.textContent = "▶";
+        }
+    }
+</script>

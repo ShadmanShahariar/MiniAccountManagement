@@ -4,19 +4,42 @@
     ViewData["Title"] = "Chart of Accounts";
 }
 
-<h2>Chart of Accounts</h2>
+<h2>@ViewData["Title"]</h2>
 
-<ul>
-    @foreach (var item in Model.Accounts.Where(a => a.ParentId == null))
-    {
-        <li>
-            <strong>@item.AccountName</strong>
-            <ul>
-                @foreach (var child in Model.Accounts.Where(a => a.ParentId == item.Id))
-                {
-                    <li>@child.AccountName</li>
-                }
-            </ul>
-        </li>
+<form method="post" asp-page-handler="Save">
+    <input type="hidden" asp-for="FormModel.Id" />
+    <div>
+        <label>Account Name</label>
+        <input asp-for="FormModel.AccountName" />
+    </div>
+    <div>
+        <label>Parent</label>
+        <select asp-for="FormModel.ParentId" asp-items="Model.ParentAccountList">
+            <option value="">-- None --</option>
+        </select>
+    </div>
+    <div>
+        <label>Type</label>
+        <input asp-for="FormModel.AccountType" />
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+<hr />
+<h3>Account Tree</h3>
+@await Html.PartialAsync("_ListPartial", Model.Accounts)
+
+<style>
+    ul {
+        list-style-type: none;
+        padding-left: 0;
     }
-</ul>
+
+    .toggle-btn {
+        display: inline-block;
+        width: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-right: 4px;
+    }
+</style>
