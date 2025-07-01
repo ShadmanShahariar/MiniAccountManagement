@@ -5,13 +5,61 @@
 }
 
 <h2>Voucher Details</h2>
+<form method="post">
+    <input type="hidden" asp-for="Voucher.Id" />
+
+    <div class="form-group">
+        <label>Reference No</label>
+        <input asp-for="Voucher.ReferenceNo" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Type</label>
+        <input asp-for="Voucher.VoucherType" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Date</label>
+        <input asp-for="Voucher.VoucherDate" type="date" class="form-control" />
+    </div>
+
+    <h4>Entries</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Account</th>
+                <th>Debit</th>
+                <th>Credit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Entries.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <select asp-for="Entries[@i].AccountId" asp-items="Model.AccountSelectList" class="form-control"></select>
+                    </td>
+                    <td>
+                        <input asp-for="Entries[@i].Debit" class="form-control" />
+                    </td>
+                    <td>
+                        <input asp-for="Entries[@i].Credit" class="form-control" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary" asp-page-handler="Update">Update</button>
+    <a asp-page="./Index" class="btn btn-secondary">Cancel</a>
+</form>
 
 <p><strong>Reference No:</strong> @Model.Voucher.ReferenceNo</p>
 <p><strong>Type:</strong> @Model.Voucher.VoucherType</p>
 <p><strong>Date:</strong> @Model.Voucher.VoucherDate.ToString("yyyy-MM-dd")</p>
 <p><strong>Created By:</strong> @Model.Voucher.CreatedBy</p>
 
-<h4>Entries</h4>
+@* <h4>Entries</h4>
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -32,5 +80,6 @@
 
     </tbody>
 </table>
-
+ *@
 <a asp-page="./Index">← Back to List</a>
+

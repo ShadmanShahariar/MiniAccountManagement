@@ -1,5 +1,6 @@
 ﻿public class VoucherEntryViewModel
 {
+    public long Id { get; set; }
     public DateTime VoucherDate { get; set; }
     public string ReferenceNo { get; set; }
     public string VoucherType { get; set; }
