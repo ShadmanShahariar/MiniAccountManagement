@@ -1,0 +1,22 @@
+﻿@page
+@model ChartModel
+@{
+    ViewData["Title"] = "Chart of Accounts";
+}
+
+<h2>Chart of Accounts</h2>
+
+<ul>
+    @foreach (var item in Model.Accounts.Where(a => a.ParentId == null))
+    {
+        <li>
+            <strong>@item.AccountName</strong>
+            <ul>
+                @foreach (var child in Model.Accounts.Where(a => a.ParentId == item.Id))
+                {
+                    <li>@child.AccountName</li>
+                }
+            </ul>
+        </li>
+    }
+</ul>
