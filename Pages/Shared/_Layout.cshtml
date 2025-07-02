@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MiniAccountManagement.styles.css" asp-append-version="true" />
 </head>
-<body>
+@* <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -48,5 +48,51 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+</body> *@
+<body>
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">Mini Account </div>
+            <div class="list-group list-group-flush">
+                <a asp-page="/Index" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a asp-page="/Vouchers/Index" class="list-group-item list-group-item-action bg-light">Vouchers</a>
+                <a asp-page="/Vouchers/Entry" class="list-group-item list-group-item-action bg-light">New Voucher</a>
+                <a asp-page="/Accounts/Chart" class="list-group-item list-group-item-action bg-light">Chart of Accounts</a>
+                <a asp-page="/Admin/Users" class="list-group-item list-group-item-action bg-light">User Management</a>
+                <a asp-page="/Security/ModulePermissions" class="list-group-item list-group-item-action bg-light">Permissions</a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="w-100">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <partial name="_LoginPartial" />
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="container-fluid mt-3">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
