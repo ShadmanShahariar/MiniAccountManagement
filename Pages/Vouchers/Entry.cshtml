@@ -4,12 +4,94 @@
     ViewData["Title"] = "Voucher Entry";
 }
 
+<style>
+    body {
+        background-color: #f4f6f9;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    h2, h4 {
+        text-align: center;
+        color: #2c3e50;
+    }
+
+    form {
+        max-width: 900px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+        form div {
+            margin-bottom: 15px;
+        }
+
+    label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #007bff;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    button[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+        button[type="submit"]:hover {
+            background-color: #218838;
+        }
+</style>
+
 <h2>Voucher Entry</h2>
 
 <form method="post" id="voucherForm">
     <div>
         <label>Date:</label>
-        <input type="date" asp-for="Voucher.VoucherDate" required />
+        <input type="date" asp-for="Voucher.VoucherDate" required id="voucherDate" />
     </div>
 
     <div>
@@ -49,15 +131,26 @@
                         }
                     </select>
                 </td>
-                <td><input type="number" class="debit-amount" name="Voucher.Entries[0].Debit" step="0.01" /></td>
-                <td><input type="number" class=".credit-amount" name="Voucher.Entries[0].Credit" step="0.01" /></td>
+                <td>
+                    <input type="number" class="debit-amount" name="Voucher.Entries[0].Debit" step="0.01" />
+                </td>
+                <td>
+                    <input type="number" class="credit-amount" name="Voucher.Entries[0].Credit" step="0.01" />
+                </td>
             </tr>
         </tbody>
     </table>
 
     <button type="submit">Save Voucher</button>
 </form>
+
 <script>
+    // Set current date on page load
+    document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("voucherDate").value = today;
+    });
+
     function validateVoucherTotals() {
         let debitTotal = 0;
         let creditTotal = 0;
@@ -84,4 +177,3 @@
         }
     });
 </script>
-

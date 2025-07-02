@@ -4,6 +4,85 @@
     ViewData["Title"] = "Module Permissions";
 }
 
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9fafb;
+        margin: 20px;
+    }
+
+    h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    table.table {
+        width: 100%;
+        max-width: 700px;
+        margin: 0 auto 30px auto;
+        border-collapse: collapse;
+        box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    table thead {
+        background-color: #007bff;
+        color: white;
+        font-weight: 600;
+    }
+
+    table th, table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table tbody tr:hover {
+        background-color: #f1f5fb;
+    }
+
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }
+
+    button.btn-primary {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 30px;
+        font-size: 16px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button.btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    a.back-link {
+        display: block;
+        width: max-content;
+        margin: 0 auto;
+        text-align: center;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+
+    a.back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
 <h2>Module Permissions for @Model.RoleName</h2>
 
 <form method="post">
@@ -34,4 +113,4 @@
     <button type="submit" class="btn btn-primary">Save Permissions</button>
 </form>
 
-<a asp-page="/Security/UserList">← Back to User Management</a>
+<a asp-page="/Security/UserList" class="back-link">← Back to User Management</a>

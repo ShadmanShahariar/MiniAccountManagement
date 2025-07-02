@@ -56,7 +56,13 @@ public class UsersModel : PageModel
             return Page();
         }
 
-        var user = new IdentityUser { UserName = NewUser.Email, Email = NewUser.Email };
+        var user = new IdentityUser
+        {
+            UserName = NewUser.Email,
+            Email = NewUser.Email,
+            EmailConfirmed = true 
+        };
+
         var result = await _userManager.CreateAsync(user, NewUser.Password);
         if (result.Succeeded)
         {
@@ -74,6 +80,7 @@ public class UsersModel : PageModel
         await LoadUsersAndRolesAsync();
         return Page();
     }
+
 
     private async Task LoadUsersAndRolesAsync()
     {

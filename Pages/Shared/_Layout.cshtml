@@ -13,51 +13,119 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"] - MiniAccountManagement</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MiniAccountManagement.styles.css" asp-append-version="true" />
+    <style>
+        /* Internal CSS for top navbar */
+
+        body {
+            padding-top: 60px; /* space for fixed navbar */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .navbar-custom {
+            background-color: #343a40;
+        }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .nav-link,
+            .navbar-custom .nav-item > .nav-link,
+            .navbar-custom .form-inline button {
+                color: #f8f9fa;
+            }
+
+                .navbar-custom .nav-link:hover,
+                .navbar-custom .nav-item > .nav-link:hover,
+                .navbar-custom .form-inline button:hover {
+                    color: #adb5bd;
+                    text-decoration: none;
+                }
+
+        .navbar-nav .nav-item {
+            margin-left: 15px;
+        }
+
+            .navbar-nav .nav-item:first-child {
+                margin-left: 0;
+            }
+
+        .form-inline {
+            margin-left: auto;
+        }
+
+        .btn-link {
+            color: #f8f9fa;
+            text-decoration: none;
+            padding: 0;
+            border: none;
+        }
+
+            .btn-link:hover {
+                color: #adb5bd;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+        main.container-fluid {
+            padding-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
-        <div class="list-group list-group-flush">
-            <a asp-page="/Index" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-            <partial name="_LoginPartial" />
-            @if (isAdmin || isViewer)
-            {
-                <a asp-page="/Vouchers/Index" class="list-group-item list-group-item-action bg-light">Vouchers</a>
-                <a asp-page="/Vouchers/Entry" class="list-group-item list-group-item-action bg-light">New Voucher</a>
-                <a asp-page="/Accounts/Chart" class="list-group-item list-group-item-action bg-light">Chart of Accounts</a>
-                <a asp-page="/Admin/Users" class="list-group-item list-group-item-action bg-light">User Management</a>
-            }
-            else if (isAccountant)
-            {
 
-                <a asp-page="/Vouchers/Index" class="list-group-item list-group-item-action bg-light">Vouchers</a>
-                <a asp-page="/Vouchers/Entry" class="list-group-item list-group-item-action bg-light">New Voucher</a>
-            }
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-page="/Index">MiniAccountMgmt</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar" aria-controls="topNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="color: white;">☰</span>
+            </button>
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper" class="w-100">
-            <div class="container-fluid mt-3">
-                @RenderBody()
+            <div class="collapse navbar-collapse" id="topNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a asp-page="/Index" class="nav-link">Dashboard</a>
+                    </li>
+
+                    @if (isAdmin || isViewer)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="/Vouchers/Index" class="nav-link">Vouchers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/Vouchers/Entry" class="nav-link">New Voucher</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/Accounts/Chart" class="nav-link">Chart of Accounts</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/Admin/Users" class="nav-link">User Management</a>
+                        </li>
+                    }
+                    else if (isAccountant)
+                    {
+                        <li class="nav-item">
+                            <a asp-page="/Vouchers/Index" class="nav-link">Vouchers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-page="/Vouchers/Entry" class="nav-link">New Voucher</a>
+                        </li>
+                    }
+                </ul>
+
+                <partial name="_LoginPartial" />
             </div>
         </div>
-    </div>
+    </nav>
+
+    <main class="container-fluid">
+        @RenderBody()
+    </main>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-
 </html>

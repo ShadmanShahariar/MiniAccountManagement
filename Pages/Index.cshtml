@@ -2,12 +2,104 @@
 @model IndexModel
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> UserManager
+
 @{
     ViewData["Title"] = "Dashboard";
     var email = User.Identity.IsAuthenticated ? User.Identity.Name : "Guest";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome, @email</h1>
-    <p>This is your dashboard.</p>
+<style>
+    body {
+        background: #f0f2f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .dashboard-container {
+        max-width: 800px;
+        margin: 60px auto;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+        text-align: center;
+    }
+
+    .dashboard-container h1 {
+        font-size: 36px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-container p {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .quote-box {
+        margin-top: 30px;
+        padding: 25px;
+        background: #e9f2ff;
+        border-left: 6px solid #007bff;
+        border-radius: 10px;
+        font-style: italic;
+        font-size: 17px;
+        color: #333;
+    }
+
+    .quote-box::before {
+        content: "❝ ";
+        font-size: 24px;
+        vertical-align: top;
+        color: #007bff;
+    }
+
+    .quote-box::after {
+        content: " ❞";
+        font-size: 24px;
+        vertical-align: bottom;
+        color: #007bff;
+    }
+
+    .author {
+        margin-top: 15px;
+        font-size: 15px;
+        color: #666;
+        text-align: right;
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-container {
+            margin: 20px;
+            padding: 25px;
+        }
+
+        .dashboard-container h1 {
+            font-size: 28px;
+        }
+
+        .dashboard-container p {
+            font-size: 16px;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <h1>Welcome, @email</h1>
+    <p>This is your dashboard. Explore the features and manage your tasks effectively.</p>
+
+    <div class="quote-box">
+        The secret of getting ahead is getting started.
+        <div class="author">– Mark Twain</div>
+    </div>
+
+    <div class="quote-box">
+        Success usually comes to those who are too busy to be looking for it.
+        <div class="author">– Henry David Thoreau</div>
+    </div>
+
+    <div class="quote-box">
+        Don’t watch the clock; do what it does. Keep going.
+        <div class="author">– Sam Levenson</div>
+    </div>
 </div>

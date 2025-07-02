@@ -1,37 +1,101 @@
 ﻿@model List<MiniAccountManagement.ViewModels.ChartOfAccountViewModel>
 
-<ul>
-    @foreach (var account in Model)
-    {
-        var hasChildren = account.Children != null && account.Children.Any();
-        var childId = $"child-{account.Id}";
-        <li>
-            @if (hasChildren)
-            {
-                <span class="toggle-btn" onclick="toggleChildren('@childId', this)">▶</span>
-            }
-            else
-            {
-                <span style="display:inline-block; width: 16px;"></span>
-            }
-
-            <strong>@account.AccountName</strong> (@account.AccountType)
-            @if (!account.Children.Any())
-            {
-                <form method="post" asp-page-handler="Delete" asp-route-id="@account.Id" style="display:inline;" onsubmit="return confirm('Are you sure?');">
-                    <button type="submit">Delete</button>
-                </form>
-            }
-
-            @if (hasChildren)
-            {
-                <ul id="@childId" style="display:none; margin-left:20px;">
-                    @await Html.PartialAsync("_ListPartial", account.Children)
-                </ul>
-            }
-        </li>
+<style>
+    .account-tree ul {
+        list-style-type: none;
+        padding-left: 20px;
     }
-</ul>
+
+    .account-tree li {
+        margin-bottom: 8px;
+        background: #fff;
+        padding: 10px 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .account-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .account-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .account-type {
+        font-size: 13px;
+        color: #666;
+    }
+
+    .btn-delete {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+        .btn-delete:hover {
+            background: #b02a37;
+        }
+
+    .toggle-btn {
+        width: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        user-select: none;
+    }
+</style>
+
+<div class="account-tree">
+    <ul>
+        @foreach (var account in Model)
+        {
+            var hasChildren = account.Children != null && account.Children.Any();
+            var childId = $"child-{account.Id}";
+            <li>
+                <div class="account-item">
+                    <div class="account-info">
+                        @if (hasChildren)
+                        {
+                            <span class="toggle-btn" onclick="toggleChildren('@childId', this)">▶</span>
+                        }
+                        else
+                        {
+                            <span class="toggle-btn">&nbsp;</span>
+                        }
+
+                        <span>@account.AccountName</span>
+                        <span class="account-type">(@account.AccountType)</span>
+                    </div>
+
+                    @if (!account.Children.Any())
+                    {
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@account.Id" style="display:inline;" onsubmit="return confirm('Are you sure?');">
+                            <button type="submit" class="btn-delete">Delete</button>
+                        </form>
+                    }
+                </div>
+
+                @if (hasChildren)
+                {
+                    <ul id="@childId" style="display:none;">
+                        @await Html.PartialAsync("_ListPartial", account.Children)
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+</div>
 
 <script>
     function toggleChildren(id, btn) {
