@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+#wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+#sidebar-wrapper {
+    width: 250px;
+    height: 100vh;
+}
+
+#page-content-wrapper {
+    flex: 1;
+    padding: 20px;
+}
