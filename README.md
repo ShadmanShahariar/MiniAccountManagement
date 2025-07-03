@@ -114,6 +114,8 @@ A role-based accounting web application built using ASP.NET Core Razor Pages and
 
 \- .NET SDK 6.0+
 
+\- adminEmail = admin@local.com
+\- adminPassword = Admin@123
 
 
 \### 🔄 Setup Steps
@@ -160,7 +162,7 @@ A role-based accounting web application built using ASP.NET Core Razor Pages and
 
 &nbsp;       - `sp\_SaveVoucher`
 
-&nbsp;	- `sp\_GetAllModulesWithPermissions`
+&nbsp;		 - `sp\_GetAllModulesWithPermissions`
 
 &nbsp;       - Any seed data (Roles, Modules)
 
@@ -190,14 +192,10 @@ A role-based accounting web application built using ASP.NET Core Razor Pages and
 
 |------------|-----------|-------------------|----------------|
 
-| !\[Login](/screenshots/login.jpg) | !\[Dashboard](/screenshots/dashboard.jpg) | !\[Chart of Accounts](/screenshots/chartofaccountEntryandList.jpg) 
-
-| !\[Voucher Entry](/screenshots/voucherEntry.jpg) | !\[Voucher List](/screenshots/voucherList.jpg) |
-
+| !\[Login](/screenshots/login.jpg) | !\[Dashboard](/screenshots/dashboard.jpg) | !\[Chart of Accounts](/screenshots/chartofaccountEntryandList.jpg) | !\[Voucher Entry](/screenshots/voucherEntry.jpg) | !\[Voucher List](/screenshots/voucherList.jpg) |
 
 
 ---
-
 
 
 \## 🧠 Project Structure
